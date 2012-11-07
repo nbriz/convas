@@ -12,8 +12,9 @@
  
     var ctx, mPos, WIDTH=500, HEIGHT=500;
     var isShft = false;
+    var curCode =' ';	 			//for console
     var rX, rY, rW, rH, bX, bY; 		//for canvas
-    var curCode='';	 			//for console
+    var mvPath = false;				//for path 
     
     setup();
     //setInterval(draw, 1000 / 60);
@@ -40,9 +41,13 @@
     
     function doKeyDown(evt){
       switch (evt.keyCode) {
-        case 16:  isShft=true; break; // shift
-        case 83:  updateCanvas(); break; // s
-	case 90: undo(); break; // z
+        case 16:  isShft=true; break; 		// shift
+        case 83:  updateCanvas(); break; 	// s
+	case 90: undo(); break; 		// z
+	case 67: clsPath(); break; 		// c
+	case 70: pFill(); break; 		// f
+	case 75: pStroke(); break; 		// k
+
       }
     }
     
@@ -54,21 +59,30 @@
     
     function onDocumentMouseMove(event) { mPos = [event.clientX,event.clientY]; }
     function onDocumentMouseDown(event) {
-	//event.preventDefault();
+	var chkFill = document.getElementById('fill').checked;
+	var chkStroke = document.getElementById('stroke').checked;
+	var chkPath = document.getElementById('path').checked;
+
         rX = mPos[0]; rY = mPos[1];
-       
-        if(isShft==false && rX<500 && rY<500){ //if mouse is over canvas && no shift
-          target();
-         // outputConsole(rX,rY,0,0);
+	       
+        if(isShft==false && rX<500 && rY<500){ //if mouse is over canvas && NO SHIFT
+	    target();
+	    if(chkPath == true && mvPath == false){
+	        startPath();
+		mvPath = true;
+	    } 
         }
         
-        if(isShft==true && rX<500 && rY<500){ //if mouse is over canvas && shift held down
-	    var chkFill = document.getElementById('fill').checked;
-	    var chkStroke = document.getElementById('stroke').checked;
-	    if(chkFill == true){ drawRect(); }
-	    if(chkStroke == true){ strokeRect(); }          
-	    outputConsole(bX,bY,mPos[0]-bX,mPos[1]-bY);  // b = saved coordinates from target  i.e.'before'
-        }       
+        if(isShft==true && rX<500 && rY<500){ //if mouse is over canvas && SHIFT held down
+	    if(chkFill == true){ drawRect(rX,rY); }
+	    if(chkStroke == true){ strokeRect(rX,rY); }
+	    if(chkPath == true && mvPath == true){
+		target();
+	        setPnt();
+	    }
+
+        }
+	
        
     }
 
@@ -92,18 +106,65 @@
       bX = rX; bY = rY;		//save current x,y coordinates in 'b' vars
     }
     
-    function drawRect() {
-      ctx.fillRect(bX,bY,mPos[0]-bX,mPos[1]-bY);
-    }
-
-    function strokeRect() {
-      ctx.strokeRect(bX,bY,mPos[0]-bX,mPos[1]-bY);
-    }    
-    
     function updateCanvas() {
 	ctx.clearRect(0,0,WIDTH,HEIGHT); 	
 	return eval(cnsl.value);
     }
+    
+    function addClr() {
+	curCode += '\nctx.fillStyle = "'+clr.value+'";';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }
+
+    function addSkClr() {
+	curCode += '\nctx.strokeStyle = "'+strk.value+'";';
+	cnsl.value = curCode;
+	return eval(curCode);
+    } 
+    
+    function drawRect(rX,rY) {
+	curCode += '\nctx.fillRect('+bX+','+bY+','+(rX-bX)+','+(rY-bY)+');';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }
+
+    function strokeRect(rX,rY) {
+        curCode += '\nctx.strokeRect('+bX+','+bY+','+(rX-bX)+','+(rY-bY)+');';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }
+    
+    function startPath() {
+	curCode += '\nctx.beginPath();\nctx.moveTo('+bX+','+bY+')';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }
+    
+    function setPnt() {
+	curCode += '\nctx.lineTo('+bX+','+bY+')';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }
+    
+    function clsPath() {
+	curCode += '\nctx.closePath();';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }
+    
+   function pFill() {
+	curCode += '\nctx.fill();';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }  
+
+   function pStroke() {
+	curCode += '\nctx.stroke();';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }  
+ 
     
     
 /*
@@ -124,28 +185,8 @@
     
     var clr = document.getElementById('fill_color');
     var strk = document.getElementById('stroke_color');
-
-    
-    function outputConsole(x,y,w,h) {
-	var chkFill = document.getElementById('fill').checked;
-	var chkStroke = document.getElementById('stroke').checked;
-	if(chkStroke == true) { curCode += "\nctx.strokeRect("+x+","+y+","+w+","+h+");"; }
-	if(chkFill == true) { curCode += "\nctx.fillRect("+x+","+y+","+w+","+h+");"; }
-	cnsl.value = curCode;
-    }
-    
-    function addClr() {
-	curCode += '\nctx.fillStyle = "'+clr.value+'";';
-	cnsl.value = curCode;
-	return eval(curCode);
-    }
-
-    function addSkClr() {
-	curCode += '\nctx.strokeStyle = "'+strk.value+'";';
-	cnsl.value = curCode;
-	return eval(curCode);
-    }    
-    
+     
+        
     function undo() {
 	var string = cnsl.value;				
 	var new_string = string.replace(/\.[^\.]+\.?$/,'');	// remove last line up to '.'
@@ -153,8 +194,11 @@
 	cnsl.value = rmv_ctx;					// update console
 	curCode = rmv_ctx; 					// update curCode
 	updateCanvas();
+	if(curCode.search('ctx.beginPath()') == -1) { mvPath = false;} 	// if no beginPath, reset mvPath
     }
-    
+
+    function clkPath() { document.getElementById('fill').checked = false; document.getElementById('stroke').checked = false; }
+    function clkRect() { document.getElementById('path').checked = false; }
     
 
 

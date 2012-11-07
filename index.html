@@ -44,10 +44,13 @@
     
 
     <div class="deetz">
-	fill rect: <input type="checkbox" id="fill" checked="checked" >
-	stroke rect: <input type="checkbox" id="stroke"><br>
 	fill color: <input type="text" id="fill_color"><button onclick="addClr()">add</button><br>
-	stroke color: <input type="text" id="stroke_color"><button onclick="addSkClr()">add</button>
+	stroke color: <input type="text" id="stroke_color"><button onclick="addSkClr()">add</button><br>
+	fill rect: <input type="checkbox" id="fill" checked="checked" onclick="clkRect()">
+	stroke rect: <input type="checkbox" id="stroke" onclick="clkRect()"><br>
+	begin path: <input type="checkbox" id="path" onclick="clkPath()">
+	<button onclick="clsPath()">close path</button> | <button onclick="pFill()">fill</button> <button onclick="pStroke()">stroke</button> 	   	   
+	
     </div>
 
  
