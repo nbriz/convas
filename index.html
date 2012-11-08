@@ -43,14 +43,25 @@
     <span style="padding-right:450px;padding-left:25px;">// Canvas</span><span>// Console</span>
 
     <div class="deetz">
-	fill color: <input type="text" id="fill_color"><button onclick="addClr()">add</button><br>
-	stroke color: <input type="text" id="stroke_color"><button onclick="addSkClr()">add</button><br>
-	fill rect: <input type="checkbox" id="fill" checked="checked" onclick="clkRect()">
-	stroke rect: <input type="checkbox" id="stroke" onclick="clkRect()"><br>
-	begin path: <input type="checkbox" id="path" onclick="clkPath()">
-	<button onclick="clsPath()">close path</button> | <button onclick="pFill()">fill</button> <button onclick="pStroke()">stroke</button> <br>
-	fill cricle: <input type="checkbox" id="fCircle" onclick="clkCir()">
-	stroke cricle: <input type="checkbox" id="sCircle" onclick="clkCir()">
+	<div class="gui_1">
+	    fill color: <input type="text" id="fill_color" size="6" value="#"><button onclick="addClr()">add</button> &nbsp; | &nbsp;
+	    stroke color: <input type="text" id="stroke_color" size="6" value="#"><button onclick="addSkClr()">add</button>
+	</div>
+	<div class="gui_2">
+	    <span style="float:left">&#9634;</span>
+	    fill rect: <input type="checkbox" id="fill" checked="checked" onclick="clkRect()">
+	    stroke rect: <input type="checkbox" id="stroke" onclick="clkRect()">
+	</div>
+	<div class="gui_3">
+	    <span style="float:left">&#9626;</span>
+	    begin path: <input type="checkbox" id="path" onclick="clkPath()">
+	    <button onclick="clsPath()">close path</button> | <button onclick="pFill()">fill</button> <button onclick="pStroke()">stroke</button>
+	</div>
+	<div class="gui_4">
+	    <span style="float:left">&#9711;</span>
+	    fill cricle: <input type="checkbox" id="fCircle" onclick="clkCir()">
+	    stroke cricle: <input type="checkbox" id="sCircle" onclick="clkCir()">
+	</div>
 	
     </div>
 

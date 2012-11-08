@@ -48,7 +48,7 @@
       switch (evt.keyCode) {
         case 16: if(rX<500 && rY<500){ isShft=true; } break; 	// shift
 	case 91: isCntrl = true; break; 			//cntrl
-        case 83: if(isCntrl==true){ updateCanvas(); preventDefault(); } break; 	// cntrl + s
+        case 83: if(isCntrl==true){ updateCanvas(); } break; 	// cntrl + s
 	case 90: if(isCntrl==true){ undo(); } break; 		// cntrl + z
 	case 67: if(rX<500 && rY<500){ clsPath(); } break; 	// c
 	case 70: if(rX<500 && rY<500){ pFill(); } break; 	// f

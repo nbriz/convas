@@ -73,4 +73,30 @@ textarea { overflow: auto; vertical-align: top; resize: vertical; }
     .deetz {
         padding:25px;
     }
-
+    
+    .deetz div {
+         border: 2px solid white;
+        padding: 10px 10px 10px 10px;
+        width: 460px;
+        text-align: center;
+        box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+        -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin-bottom:5px;
+    }
+    
+    .gui_1 {
+        background: #E9EAEE;
+    }
+    .gui_2 {
+        background: #D9EEE6;
+    }
+    .gui_3 {
+        background: #EED8DA;
+    }
+    .gui_4 {
+        background: #C6DBEE;
+    }
