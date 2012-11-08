@@ -8,9 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
     <title>Canvas Shapes</title>
-    <meta name="description" content=" DESCRIPTION ">
+    <meta name="description" content="conVas ( Console + Canvas ) is a digital literacy tool for symultaneously drawing && coding using the html5 canvas element ">
     <meta name="author" content=" Nick Briz ">
-    <meta name="keywords" content=" KEYWORDS ">
     <link rel="image_src" href="http://www.domain.com/images/FaceBookthumb.jpg" >
     <!-- DIRECT URL to img that'll show up when posted on Facebook -->
     <!-- favicon + apple/android touch icons should be properlly named in root -->
@@ -18,7 +17,7 @@
     <meta name="viewport" content="width=device-width">
         
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/styles.css"><!----- switch to minified styles.css before going live ----->
+    <link rel="stylesheet" href="css/styles.css">
     <script src="js/libs/modernizr-2.5.3.min.js"></script>
 </head>
 
@@ -35,24 +34,34 @@
 
     <div id="console_wrap">
 	
-    <label for="cnsl" style="color:#33FF00;">// Console</label>
 	<textarea name="cnsl" id="cnsl" rows="50" onkeydown="return catchTab(this,event)">
 	</textarea>
 	
     </div>
     
-    <hr class='clear'> 
-    <span style="padding-right:450px;padding-left:25px;">// Canvas</span>
+    <br><br>
+    <span style="padding-right:450px;padding-left:25px;">// Canvas</span><span>// Console</span>
 
     <div class="deetz">
-	fill color: <input type="text" id="fill_color"><button onclick="addClr()">add</button><br>
-	stroke color: <input type="text" id="stroke_color"><button onclick="addSkClr()">add</button><br>
-	fill rect: <input type="checkbox" id="fill" checked="checked" onclick="clkRect()">
-	stroke rect: <input type="checkbox" id="stroke" onclick="clkRect()"><br>
-	begin path: <input type="checkbox" id="path" onclick="clkPath()">
-	<button onclick="clsPath()">close path</button> | <button onclick="pFill()">fill</button> <button onclick="pStroke()">stroke</button> <br>
-	draw cricle: <input type="checkbox" id="circle" onclick="clkCir()">
-
+	<div class="gui_1">
+	    fill color: <input type="text" id="fill_color" size="6" value="#"><button onclick="addClr()">add</button> &nbsp; | &nbsp;
+	    stroke color: <input type="text" id="stroke_color" size="6" value="#"><button onclick="addSkClr()">add</button>
+	</div>
+	<div class="gui_2">
+	    <span style="float:left">&#9634;</span>
+	    fill rect: <input type="checkbox" id="fill" checked="checked" onclick="clkRect()">
+	    stroke rect: <input type="checkbox" id="stroke" onclick="clkRect()">
+	</div>
+	<div class="gui_3">
+	    <span style="float:left">&#9626;</span>
+	    begin path: <input type="checkbox" id="path" onclick="clkPath()">
+	    <button onclick="clsPath()">close path</button> | <button onclick="pFill()">fill</button> <button onclick="pStroke()">stroke</button>
+	</div>
+	<div class="gui_4">
+	    <span style="float:left">&#9711;</span>
+	    fill cricle: <input type="checkbox" id="fCircle" onclick="clkCir()">
+	    stroke cricle: <input type="checkbox" id="sCircle" onclick="clkCir()">
+	</div>
 	
     </div>
 

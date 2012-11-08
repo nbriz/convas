@@ -39,25 +39,27 @@
 \ \____\\ \___/ \ \____\ \_\ \_\ \__\/\____/
  \/____/ \/__/   \/____/\/_/\/_/\/__/\/___/ 
 
-*/    
+*/
+    document.addEventListener("keydown", function(e) { // PREVENT DEFAULT SAVE 
+      if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) { e.preventDefault(); }
+    }, false);
     
     function doKeyDown(evt){
       switch (evt.keyCode) {
         case 16: if(rX<500 && rY<500){ isShft=true; } break; 	// shift
 	case 91: isCntrl = true; break; 			//cntrl
-        case 83: updateCanvas(); break; 			// s
+        case 83: if(isCntrl==true){ updateCanvas(); } break; 	// cntrl + s
 	case 90: if(isCntrl==true){ undo(); } break; 		// cntrl + z
 	case 67: if(rX<500 && rY<500){ clsPath(); } break; 	// c
 	case 70: if(rX<500 && rY<500){ pFill(); } break; 	// f
 	case 75: if(rX<500 && rY<500){ pStroke(); } break; 	// k
-
       }
     }
-    
+	
     function doKeyUp(evt){
       switch (evt.keyCode) {
         case 16:  isShft = false; break; 	//shift
-	case 91:  isCntrl = false; break; //cntrl
+	case 91:  isCntrl = false; break;	//cntrl
       }
     }
     
@@ -66,7 +68,8 @@
 	var chkFill = document.getElementById('fill').checked;
 	var chkStroke = document.getElementById('stroke').checked;
 	var chkPath = document.getElementById('path').checked;
-	var chkCir = document.getElementById('circle').checked;
+	var chkFCir = document.getElementById('fCircle').checked;
+	var chkSCir = document.getElementById('sCircle').checked;
 
         rX = mPos[0]; rY = mPos[1];
 	       
@@ -85,11 +88,12 @@
 		target();
 	        setPnt();
 	    }
-	    if(chkCir == true){
+	    if(chkFCir == true || chkSCir == true){
 		var a = (rX-bX) * (rX-bX);
 		var b = (rY-bY) * (rY-bY);
 		var s = Math.sqrt(a+b);
-		drawCir(s);
+		if(chkFCir == true && chkSCir == true){ drawCir(Math.round(s)); }
+		else { chkFCir==true ? fillCir(Math.round(s)) : strokeCir(Math.round(s)); }
 	    }
 	}
     }
@@ -179,13 +183,23 @@
     
     // ARCS
     
-    function drawCir(s) {
-	curCode += '\nctx.beginPath();\nctx.arc('+bX+','+bY+','+s+',0,Math.PI*2,true);';
+    function fillCir(s) {
+	curCode += '\nctx.beginPath();\nctx.arc('+bX+','+bY+','+s+',0,Math.PI*2,true);\nctx.fill();';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }
+    
+    function strokeCir(s) {
+	curCode += '\nctx.beginPath();\nctx.arc('+bX+','+bY+','+s+',0,Math.PI*2,true);\nctx.stroke();';
 	cnsl.value = curCode;
 	return eval(curCode);
     }   
- 
-    
+
+    function drawCir(s) {
+	curCode += '\nctx.beginPath();\nctx.arc('+bX+','+bY+','+s+',0,Math.PI*2,true);\nctx.fill();\nctx.stroke();';
+	cnsl.value = curCode;
+	return eval(curCode);
+    }       
     
 /*
                                      ___             
@@ -222,12 +236,14 @@
     function clkPath() {
 	document.getElementById('fill').checked = false;
 	document.getElementById('stroke').checked = false;
-	document.getElementById('circle').checked = false;
+	document.getElementById('fCircle').checked = false;
+	document.getElementById('sCircle').checked = false;
     }
     
     function clkRect() {
 	document.getElementById('path').checked = false;
-	document.getElementById('circle').checked = false;
+	document.getElementById('fCircle').checked = false;
+	document.getElementById('sCircle').checked = false;
     }
 
     function clkCir() {

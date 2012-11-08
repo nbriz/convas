@@ -20,13 +20,12 @@ conVas ( Console + Canvas ) is a digital literacy tool for symultaneously drawin
     
     // drawing cirlces
     click on the canvas to set the center point, then shift + click to set the radius
-    click fill (or f) and/or click stroke (or k)
     
 
 ## console: ##
-    write canvas code (javascript) and click 's' to update your canvas to reflect the code written in your console
+    write canvas code (javascript) and click 'cmd + s' to update your canvas to reflect the code written in your console
 
 
 ## general: ##
-    edit both symultaneously, click 'cnrl + z' to undo 
+    edit both symultaneously, click 'cmd + z' to undo 
 
